@@ -50,24 +50,23 @@ public class CartService {
 
     public void saveCart(CartDto cartDto, HttpServletRequest httpServletRequest) {
         //todo validate item request
-        Carts cart = modelMapper.map(cartDto,Carts.class);
+        Carts cart = modelMapper.map(cartDto, Carts.class);
         User user = getUserByToken(httpServletRequest.getHeader("AUTHORIZATION"));
         cart.setUserId(user.getId());
-        if(cart.getCartId() == null) { //saviing new cart
+        if (cart.getCartId() == null) { //saviing new cart
             Optional<Carts> existingCart = cartRepository.getByUserId(user.getId());
-            if(existingCart.isPresent())
+            if (existingCart.isPresent())
                 throw new ItemAlreadyExistException("cart already exist");
             else
                 cartRepository.save(cart);
         } else { //update in existing cart
 
             Optional<Carts> existingCart = cartRepository.getByUserId(cart.getUserId());
-            if(existingCart.isPresent())
-            {
-                if(!cart.getItemsInCart().isEmpty()) {
+            if (existingCart.isPresent()) {
+                if (!cart.getItemsInCart().isEmpty()) {
                     existingCart.get().setItemsInCart(cart.getItemsInCart());
                     cartRepository.save(cart);
-                }else
+                } else
                     throw new ItemNotFoundException("No item To add");
             } else
                 throw new ItemNotFoundException("cart does not exist");
@@ -96,11 +95,12 @@ public class CartService {
             cartRepository.save(items);
 
     }
+
     public User getUserByToken(String token) {
         String[] splitToken = token.split(" ");
         String userName = jwtUtils.getUserNameFromJwtToken(splitToken[1]);
         Optional<User> user = userRepository.findByUsername(userName);
-        if(user.isPresent())
+        if (user.isPresent())
             return user.get();
         else
             throw new UserNotFoundException("No user found against this token");
@@ -109,15 +109,15 @@ public class CartService {
     public ResponseEntity orderCartItems(HttpServletRequest httpServletRequest) {
 
         User user = getUserByToken(httpServletRequest.getHeader("AUTHORIZATION"));
-       log.info("placing order for user "+user.getUsername());
+        log.info("placing order for user " + user.getUsername());
         Optional<Carts> carts = cartRepository.getByUserId(user.getId());
         List<Items> itemInCarts = carts.get().getItemsInCart();
-        log.info("placing order cart id is "+carts.get().getCartId());
+        log.info("placing order cart id is " + carts.get().getCartId());
         if (carts.isPresent()) {
 
             UUID uuid = UUID.randomUUID();
             itemInCarts.forEach(items -> {
-            //saving all items against common order uuid
+                //saving all items against common order uuid
                 orderRepository.save(Orders.builder().userId(user.getId())
                         .orderUuid(uuid.toString())
                         .itemId(items.getItemId()).build());

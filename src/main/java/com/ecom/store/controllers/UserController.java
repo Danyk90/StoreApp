@@ -98,6 +98,20 @@ public class UserController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @PutMapping("/update-item")
+    ResponseEntity updateItem(@RequestBody ItemsDto itemsDto) {
+
+        itemService.updateItem(itemsDto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete-item")
+    ResponseEntity deleteItem(@RequestParam("id") Long id) {
+
+        itemService.deleteById(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('USER')  or hasRole('ADMIN')")
     @PostMapping("/cart/add")
     public ResponseEntity AddToCart(@RequestBody CartDto cartDto) {
@@ -110,7 +124,7 @@ public class UserController {
     @DeleteMapping("/cart/delete")
     public ResponseEntity DeleteCartItem(@RequestBody CartDto cartDto) {
         log.info("-delete cart items");
-        cartService.deleteCart(cartDto,httpServletRequest);
+        cartService.deleteCart(cartDto, httpServletRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 

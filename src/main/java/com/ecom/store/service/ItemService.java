@@ -24,33 +24,36 @@ public class ItemService {
 
     public List<ItemsDto> getAllItems() {
 
-      List<Items> items = itemRepository.findItemsByActiveIsTrue();
-      return     items.stream().map(Items::toDto).collect(Collectors.toList());
+        List<Items> items = itemRepository.findItemsByActiveIsTrue();
+        return items.stream().map(Items::toDto).collect(Collectors.toList());
 
     }
 
     public void saveitem(ItemsDto itemsDto) {
         //todo validate item request
-        Items items = modelMapper.map(itemsDto,Items.class);
-        if(items.getItemId() == null)
+        Items items = modelMapper.map(itemsDto, Items.class);
+        if (items.getItemId() == null)
             itemRepository.save(items);
         else
             throw new ItemAlreadyExistException("Item Already Exists");
     }
+
     public void updateItem(ItemsDto itemsDto) {
         //todo validate item request
-        Items items = modelMapper.map(itemsDto,Items.class);
-        if(items.getItemId() == null)
+        Items items = modelMapper.map(itemsDto, Items.class);
+        if (items.getItemId() == null)
             throw new ItemNotFoundException("Item id not present ");
         else
             itemRepository.save(items);
 
-         }
+    }
+
     public ItemsDto getItemById(Long id) {
 
         Items items = itemRepository.findById(id).orElseThrow(ItemNotFoundException::new);
-        return     modelMapper.map(items,ItemsDto.class);
+        return modelMapper.map(items, ItemsDto.class);
     }
+
     public void deleteById(Long id) {
         itemRepository.deleteById(id);
     }

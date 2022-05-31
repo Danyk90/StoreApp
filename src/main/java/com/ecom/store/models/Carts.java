@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cart",schema = "store")
+@Table(name = "cart", schema = "store")
 public class Carts implements Serializable {
 
     @Id
@@ -21,7 +21,6 @@ public class Carts implements Serializable {
     private Long cartId;
 
     @OneToMany
-/*    @JoinColumn(name = "cart_items",referencedColumnName = "id")*/
     private List<Items> itemsInCart;
 
     @Column(name = "user_id")

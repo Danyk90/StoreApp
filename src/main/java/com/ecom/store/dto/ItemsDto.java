@@ -16,11 +16,8 @@ import lombok.NoArgsConstructor;
 public class ItemsDto {
 
     private Long itemId;
-
     private String itemName;
-
     private double price;
-
     @JsonProperty("isActive")
     private boolean isActive;
 

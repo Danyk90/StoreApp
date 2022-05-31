@@ -53,11 +53,11 @@ public class UserService {
     @Autowired
     RefreshTokenService refreshTokenService;
 
-	@Autowired
-	RoleRepository roleRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
-	@Autowired
-	PasswordEncoder encoder;
+    @Autowired
+    PasswordEncoder encoder;
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -69,55 +69,53 @@ public class UserService {
     }
 
     public ResponseEntity<MessageResponse> registerUser(SignupRequest signUpRequest) {
-		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
-		}
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+        }
 
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
-		}
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+        }
 
-		// Create new user's account
-		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-				encoder.encode(signUpRequest.getPassword()));
+        // Create new user's account
+        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
+                encoder.encode(signUpRequest.getPassword()));
 
-		Set<String> strRoles = signUpRequest.getRole();
-		Set<Role> roles = new HashSet<>();
+        Set<String> strRoles = signUpRequest.getRole();
+        Set<Role> roles = new HashSet<>();
 
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-					case "admin":
-						Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-						roles.add(adminRole);
+        if (strRoles == null) {
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
 
-						break;
-					case "mod":
-						Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-						roles.add(modRole);
+                        break;
+                    case "mod":
+                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(modRole);
 
-						break;
-					default:
-						Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-						roles.add(userRole);
-				}
-			});
-		}
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
 
-		user.setRoles(roles);
-		userRepository.save(user);
+        user.setRoles(roles);
+        userRepository.save(user);
 
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
-
-
 
 
     public ResponseEntity<JwtResponse> login(LoginRequest loginRequest) {
@@ -137,21 +135,22 @@ public class UserService {
     }
 
     public ResponseEntity refreshToken(TokenRefreshRequest request) {
-		String requestRefreshToken = request.getRefreshToken();
+        String requestRefreshToken = request.getRefreshToken();
 
-		return refreshTokenService.findByToken(requestRefreshToken)
-				.map(refreshTokenService::verifyExpiration)
-				.map(RefreshToken::getUser)
-				.map(user -> {
-					String token = jwtUtils.generateTokenFromUsername(user.getUsername());
-					return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
-				})
-				.orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
-						"Refresh token is not in database!"));
-	}
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtUtils.generateTokenFromUsername(user.getUsername());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
+    }
+
     public ResponseEntity<MessageResponse> logout(LogOutRequest logOutRequest) {
 
-		refreshTokenService.deleteByUserId(logOutRequest.getUserId());
-		return ResponseEntity.ok(new MessageResponse("Log out successful!"));
+        refreshTokenService.deleteByUserId(logOutRequest.getUserId());
+        return ResponseEntity.ok(new MessageResponse("Log out successful!"));
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "order",schema = "store")
+@Table(name = "order", schema = "store")
 public class Orders implements Serializable {
 
     @Id
@@ -22,10 +22,10 @@ public class Orders implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
 
-    @Column(name = "item_id",nullable = false)
+    @Column(name = "item_id", nullable = false)
     private Long itemId;
 
-    @Column(name = "order_uuid",nullable = false)
+    @Column(name = "order_uuid", nullable = false)
     private String orderUuid;
 
     @Column(name = "user_id")

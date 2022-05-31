@@ -15,7 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "item",schema = "store")
+@Table(name = "item", schema = "store")
 public class Items implements Serializable {
 
 
@@ -24,19 +24,18 @@ public class Items implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long itemId;
 
-    @Column(name = "item_name",nullable = false)
+    @Column(name = "item_name", nullable = false)
     private String itemName;
 
-    @Column(name="price",nullable = false)
+    @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name="active",nullable = false)
+    @Column(name = "active", nullable = false)
     private boolean active;
 
     @ManyToOne
-   /* @Column(name="cart_id",nullable = false)*/
+    /* @Column(name="cart_id",nullable = false)*/
     private Carts carts;
-
 
 
     public ItemsDto toDto() {
