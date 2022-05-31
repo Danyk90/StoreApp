@@ -8,11 +8,11 @@
 		<version>2.2.11.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bezkoder</groupId>
-	<artifactId>spring-boot-security-jwt</artifactId>
+	<groupId>com.ecom.store</groupId>
+	<artifactId>ecom-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-security-jwt</name>
-	<description>Spring Boot, Spring Security: JWT Authentication &amp; Authorization with Refresh Token example</description>
+	<name>spring-boot-ecom-store</name>
+	<description>Ecom Store With Auth  impl</description>
 
 	<properties>
 		<java.version>1.8</java.version>
