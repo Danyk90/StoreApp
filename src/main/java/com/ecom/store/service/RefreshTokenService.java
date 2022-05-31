@@ -1,9 +1,7 @@
-package com.ecom.store.security.services;
+package com.ecom.store.service;
 
-import java.time.Instant;
-import java.util.Optional;
-import java.util.UUID;
-
+import com.ecom.store.exception.TokenRefreshException;
+import com.ecom.store.models.RefreshToken;
 import com.ecom.store.repository.RefreshTokenRepository;
 import com.ecom.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ecom.store.exception.TokenRefreshException;
-import com.ecom.store.models.RefreshToken;
+import java.time.Instant;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class RefreshTokenService {

@@ -17,8 +17,6 @@ import com.ecom.store.payload.response.TokenRefreshResponse;
 import com.ecom.store.repository.RoleRepository;
 import com.ecom.store.repository.UserRepository;
 import com.ecom.store.security.jwt.JwtUtils;
-import com.ecom.store.security.services.RefreshTokenService;
-import com.ecom.store.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,7 +27,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

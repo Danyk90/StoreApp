@@ -3,23 +3,11 @@ package com.ecom.store.controllers;
 
 import com.ecom.store.dto.CartDto;
 import com.ecom.store.dto.ItemsDto;
-import com.ecom.store.exception.TokenRefreshException;
-import com.ecom.store.models.ERole;
-import com.ecom.store.models.RefreshToken;
-import com.ecom.store.models.Role;
-import com.ecom.store.models.User;
 import com.ecom.store.payload.request.LogOutRequest;
 import com.ecom.store.payload.request.LoginRequest;
 import com.ecom.store.payload.request.SignupRequest;
 import com.ecom.store.payload.request.TokenRefreshRequest;
-import com.ecom.store.payload.response.JwtResponse;
-import com.ecom.store.payload.response.MessageResponse;
-import com.ecom.store.payload.response.TokenRefreshResponse;
-import com.ecom.store.repository.RoleRepository;
 import com.ecom.store.repository.UserRepository;
-import com.ecom.store.security.jwt.JwtUtils;
-import com.ecom.store.security.services.RefreshTokenService;
-import com.ecom.store.security.services.UserDetailsImpl;
 import com.ecom.store.service.CartService;
 import com.ecom.store.service.ItemService;
 import com.ecom.store.service.UserService;
@@ -29,18 +17,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

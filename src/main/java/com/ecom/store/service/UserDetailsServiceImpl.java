@@ -1,5 +1,6 @@
-package com.ecom.store.security.services;
+package com.ecom.store.service;
 
+import com.ecom.store.models.User;
 import com.ecom.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.ecom.store.models.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

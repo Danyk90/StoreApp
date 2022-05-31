@@ -1,5 +1,8 @@
-package com.ecom.store.security;
+package com.ecom.store.config;
 
+import com.ecom.store.security.jwt.AuthEntryPointJwt;
+import com.ecom.store.security.jwt.AuthTokenFilter;
+import com.ecom.store.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.ecom.store.security.jwt.AuthEntryPointJwt;
-import com.ecom.store.security.jwt.AuthTokenFilter;
-import com.ecom.store.security.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity

@@ -2,12 +2,11 @@ package com.ecom.store.security.jwt;
 
 import java.util.Date;
 
+import com.ecom.store.service.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import com.ecom.store.security.services.UserDetailsImpl;
 
 import io.jsonwebtoken.*;
 
